@@ -2,28 +2,6 @@ import React, { Component } from 'react';
 import './TodoForm.css';
 
 class TodoForm extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     tempDo: ''
-    //   finalDo: ''
-    // }
-  // };
-
-  // handleChange(e) {
-  //   this.setState({
-  //     [e.target.name]: e.target.value
-  //   })
-  // }
-
-  // handleSubmit(e) {
-  //   e.preventDefault;
-  //   this.setState({
-  //     finalDo: this.state.tempDo,
-  //     tempDo: ''
-  //     })
-  //   }
-
   render() {
     return (
       <div>
