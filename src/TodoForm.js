@@ -20,7 +20,7 @@ class EditForm extends Component {
     return (
       <div>
         <form onSubmit={this.props.handleUpdate}>
-          <input name="tempDo" type="text" value={this.props.tempDo} onChange={this.props.handleChange}/>
+          <input name="editDo" type="text" value={this.props.editDo} onChange={this.props.handleChange}/>
           <input type="submit" value="Add"/>
         </form>
       </div>

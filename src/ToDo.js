@@ -9,6 +9,7 @@ class ToDo extends Component {
         <p>&nbsp;{this.props.text}&nbsp;</p>
         <button onClick={this.props.handleDelete}>X</button>
         <button onClick={this.props.handleEdit}>Edit</button>
+        {this.props.children}
       </div>
     )
   };

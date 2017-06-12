@@ -9,6 +9,7 @@ class TodoList extends Component {
     this.state = {
       doList: [],
       tempDo: '',
+      editDo: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -61,14 +62,14 @@ class TodoList extends Component {
   }
 
   handleEdit(id) {
-    let doList = this.state.doList.slice(), tempDo;
+    let doList = this.state.doList.slice(), editDo;
     for (var i = 0; i < doList.length; i++) {
       if (doList[i].key === id) {
-        tempDo = doList[i].todo
+        editDo = doList[i].todo
       }
     }
     this.setState(
-      {tempDo}
+      {editDo}
     )
   }
 
@@ -76,18 +77,18 @@ class TodoList extends Component {
     let doList = this.state.doList.slice();
     for (var i = 0; i < doList.length; i++) {
       if (doList[i].key === id) {
-        doList[i].todo = this.state.tempDo;
+        doList[i].todo = this.state.editDo;
       }
     }
-    this.setState(
-      doList: doList
-      // tempDo = ''
-    )
+    this.setState({
+      doList: doList,
+      editDo: ''
+    })
   }
 
   render() {
     let list = this.state.doList.map((td) => {
-      if (!td.isChecked && !this.state.tempDo) {
+      if (!td.isChecked && !this.state.editDo) {
         return <ToDo key={td.key}                           
                 text={td.todo}
                 handleDelete={this.handleDelete.bind(this, td.key)}
@@ -95,13 +96,14 @@ class TodoList extends Component {
                 handleEdit={this.handleEdit.bind(this, td.key)}
                 checked
                 />
-      } else if (!td.isChecked && this.state.tempDo) {
+      } else if (!td.isChecked && this.state.editDo) {
+        // debugger;
         return <ToDo key={td.key}                           
                 text={td.todo}
                 handleDelete={this.handleDelete.bind(this, td.key)}
                 handleChecked={this.handleChecked.bind(this, td.key)}
                 checked>
-                <EditForm handleUpdate={this.handleUpdate.bind(this, td.key)} tempDo={this.state.tempDo} handleChange={this.handleChange}/>
+                <EditForm handleUpdate={this.handleUpdate.bind(this, td.key)} editDo={this.state.editDo} handleChange={this.handleChange}/>
                 </ToDo>
                 
       }  else {
