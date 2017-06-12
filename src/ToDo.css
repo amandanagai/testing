@@ -1,3 +1,37 @@
 p {
   display: inline-block;
 }
+
+#todo {
+  height: 80px;
+  width: 360px;
+  background-color: #FFE5CC;
+  margin: 0 auto;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+button {
+  border-radius: 5px;
+  margin: 2px; 
+  border: none;
+}
+
+button:hover {
+  cursor: pointer;
+  box-shadow: 3px 3px 8px #999999;
+}
+
+button:focus {
+  outline: none;
+}
+
+.edit {
+  background-color: lightblue;
+}
+
+.delete {
+  background-color: pink;
+}
+

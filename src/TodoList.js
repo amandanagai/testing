@@ -32,7 +32,7 @@ class TodoList extends Component {
   handleSubmit(e) {
     e.preventDefault();
     let doList = this.state.doList.slice();
-    doList.push({key: this.guid(), todo: this.state.tempDo, isChecked: false});
+    doList.push({key: this.guid(), todo: this.state.tempDo, isChecked: false, isEditing: false});
     this.setState({
       doList: doList,
       tempDo: ''
@@ -65,12 +65,14 @@ class TodoList extends Component {
     let doList = this.state.doList.slice(), editDo;
     for (var i = 0; i < doList.length; i++) {
       if (doList[i].key === id) {
-        editDo = doList[i].todo
+        editDo = doList[i].todo;
+        doList[i].isEditing = true;
       }
     }
-    this.setState(
-      {editDo}
-    )
+    this.setState({
+      editDo: editDo,
+      doList: doList
+    })
   }
 
   handleUpdate(id) {
@@ -78,6 +80,7 @@ class TodoList extends Component {
     for (var i = 0; i < doList.length; i++) {
       if (doList[i].key === id) {
         doList[i].todo = this.state.editDo;
+        doList[i].isEditing = false;
       }
     }
     this.setState({
@@ -86,36 +89,39 @@ class TodoList extends Component {
     })
   }
 
+  handleCancel(id) {
+    let doList = this.state.doList.slice();
+    for (var i = 0; i < doList.length; i++) {
+      if (doList[i].key === id) {
+        doList[i].isEditing = false;
+      }
+    }
+    this.setState({
+      editDo: '',
+      doList: doList
+    })
+  }
+
   render() {
     let list = this.state.doList.map((td) => {
-      if (!td.isChecked && !this.state.editDo) {
-        return <ToDo key={td.key}                           
-                text={td.todo}
-                handleDelete={this.handleDelete.bind(this, td.key)}
-                handleChecked={this.handleChecked.bind(this, td.key)}
-                handleEdit={this.handleEdit.bind(this, td.key)}
-                checked
-                />
-      } else if (!td.isChecked && this.state.editDo) {
-        // debugger;
-        return <ToDo key={td.key}                           
-                text={td.todo}
-                handleDelete={this.handleDelete.bind(this, td.key)}
-                handleChecked={this.handleChecked.bind(this, td.key)}
-                checked>
-                <EditForm handleUpdate={this.handleUpdate.bind(this, td.key)} editDo={this.state.editDo} handleChange={this.handleChange}/>
-                </ToDo>
-                
-      }  else {
-        return <ToDo key={td.key}                           
-                text={td.todo}
-                handleDelete={this.handleDelete.bind(this, td.key)}
-                handleChecked={this.handleChecked.bind(this, td.key)}
-                />
-      }
-      // else {
-      //   return <Alert/>
-      // }
+      return td.isEditing ? 
+        <ToDo key={td.key}                           
+          text={td.todo}
+          handleDelete={this.handleDelete.bind(this, td.key)}
+          handleChecked={this.handleChecked.bind(this, td.key)}>
+          <EditForm handleUpdate={this.handleUpdate.bind(this, td.key)}
+          editDo={this.state.editDo}
+          handleChange={this.handleChange}
+          handleCancel={this.handleCancel.bind(this, td.key)}
+          />
+        </ToDo>
+        :
+        <ToDo key={td.key}                           
+          text={td.todo}
+          handleDelete={this.handleDelete.bind(this, td.key)}
+          handleChecked={this.handleChecked.bind(this, td.key)}
+          handleEdit={this.handleEdit.bind(this, td.key)}
+        />
     })
 
     return (
@@ -124,9 +130,7 @@ class TodoList extends Component {
         handleChange={this.handleChange}
         tempDo={this.state.tempDo}
         />
-        <ul>
-          {list}
-        </ul>
+        {list}
       </div>
     )
   };

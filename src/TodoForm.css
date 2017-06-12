@@ -1,0 +1,25 @@
+.form-button {
+  border-radius: 5px;
+  margin: 2px; 
+  border: none;
+  background-color: lightgreen;
+}
+
+#main-form {
+  height: 100px;
+  width: 360px;
+  background-color: beige;
+  margin: 0 auto;
+  padding-top: 2px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.form-button:hover {
+  cursor: pointer;
+  box-shadow: 3px 3px 8px #999999;
+}
+
+.form-button:focus {
+  outline: none;
+}
