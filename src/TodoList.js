@@ -108,7 +108,8 @@ class TodoList extends Component {
         <ToDo key={td.key}                           
           text={td.todo}
           handleDelete={this.handleDelete.bind(this, td.key)}
-          handleChecked={this.handleChecked.bind(this, td.key)}>
+          handleChecked={this.handleChecked.bind(this, td.key)}
+          isChecked={td.isChecked}>
           <EditForm handleUpdate={this.handleUpdate.bind(this, td.key)}
           editDo={this.state.editDo}
           handleChange={this.handleChange}
@@ -121,6 +122,7 @@ class TodoList extends Component {
           handleDelete={this.handleDelete.bind(this, td.key)}
           handleChecked={this.handleChecked.bind(this, td.key)}
           handleEdit={this.handleEdit.bind(this, td.key)}
+          isChecked={td.isChecked}
         />
     })
 
