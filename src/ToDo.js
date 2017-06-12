@@ -8,6 +8,7 @@ class ToDo extends Component {
         <input type="checkbox" onClick={this.props.handleChecked}/>
         <p>&nbsp;{this.props.text}&nbsp;</p>
         <button onClick={this.props.handleDelete}>X</button>
+        <button onClick={this.props.handleEdit}>Edit</button>
       </div>
     )
   };

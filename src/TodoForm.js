@@ -15,4 +15,18 @@ class TodoForm extends Component {
 
 }
 
-export default TodoForm;
+class EditForm extends Component {
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.props.handleUpdate}>
+          <input name="tempDo" type="text" value={this.props.tempDo} onChange={this.props.handleChange}/>
+          <input type="submit" value="Add"/>
+        </form>
+      </div>
+    )
+  };
+
+}
+
+export {TodoForm, EditForm};

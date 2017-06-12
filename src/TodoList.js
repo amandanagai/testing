@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ToDo from './ToDo';
-import TodoForm from './TodoForm';
+import {TodoForm, EditForm} from './TodoForm';
 import './TodoList.css';
 
 class TodoList extends Component {
@@ -33,8 +33,8 @@ class TodoList extends Component {
     let doList = this.state.doList.slice();
     doList.push({key: this.guid(), todo: this.state.tempDo, isChecked: false});
     this.setState({
-      tempDo: '',
-      doList: doList
+      doList: doList,
+      tempDo: ''
     })
   };
 
@@ -51,7 +51,7 @@ class TodoList extends Component {
   handleChecked(id) {
     let doList = this.state.doList.slice();
     for (var i = 0; i < doList.length; i++) {
-      if (this.state.doList[i].key === id) {
+      if (doList[i].key === id) {
         doList[i].isChecked = doList[i].isChecked? false : true;
       }
     }
@@ -61,26 +61,49 @@ class TodoList extends Component {
   }
 
   handleEdit(id) {
-    let doList = this.state.doList.slice();
+    let doList = this.state.doList.slice(), tempDo;
     for (var i = 0; i < doList.length; i++) {
-      if (this.state.doList[i].key === id) {
-        doList[i].isChecked = doList[i].isChecked? false : true;
+      if (doList[i].key === id) {
+        tempDo = doList[i].todo
       }
     }
     this.setState(
-      {doList}
+      {tempDo}
+    )
+  }
+
+  handleUpdate(id) {
+    let doList = this.state.doList.slice();
+    for (var i = 0; i < doList.length; i++) {
+      if (doList[i].key === id) {
+        doList[i].todo = this.state.tempDo;
+      }
+    }
+    this.setState(
+      doList: doList
+      // tempDo = ''
     )
   }
 
   render() {
     let list = this.state.doList.map((td) => {
-      if (!td.isChecked) {
+      if (!td.isChecked && !this.state.tempDo) {
         return <ToDo key={td.key}                           
                 text={td.todo}
                 handleDelete={this.handleDelete.bind(this, td.key)}
                 handleChecked={this.handleChecked.bind(this, td.key)}
+                handleEdit={this.handleEdit.bind(this, td.key)}
                 checked
                 />
+      } else if (!td.isChecked && this.state.tempDo) {
+        return <ToDo key={td.key}                           
+                text={td.todo}
+                handleDelete={this.handleDelete.bind(this, td.key)}
+                handleChecked={this.handleChecked.bind(this, td.key)}
+                checked>
+                <EditForm handleUpdate={this.handleUpdate.bind(this, td.key)} tempDo={this.state.tempDo} handleChange={this.handleChange}/>
+                </ToDo>
+                
       }  else {
         return <ToDo key={td.key}                           
                 text={td.todo}
